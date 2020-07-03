@@ -1,0 +1,7 @@
+C:\Visual Stuido Projekte\ki_s6\k1_s6\K1_S6\bin\Debug\K1_S6.exe.config
+C:\Visual Stuido Projekte\ki_s6\k1_s6\K1_S6\bin\Debug\K1_S6.exe
+C:\Visual Stuido Projekte\ki_s6\k1_s6\K1_S6\bin\Debug\K1_S6.pdb
+C:\Visual Stuido Projekte\ki_s6\k1_s6\K1_S6\obj\Debug\K1_S6.csprojAssemblyReference.cache
+C:\Visual Stuido Projekte\ki_s6\k1_s6\K1_S6\obj\Debug\K1_S6.csproj.CoreCompileInputs.cache
+C:\Visual Stuido Projekte\ki_s6\k1_s6\K1_S6\obj\Debug\K1_S6.exe
+C:\Visual Stuido Projekte\ki_s6\k1_s6\K1_S6\obj\Debug\K1_S6.pdb
