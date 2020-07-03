@@ -14,6 +14,10 @@ namespace K1_S6.Classes
 
         private List<string> _dataList = new List<string>();
 
+        private bool _FileReadIn = false;
+
+        public bool FileReadIn { get { return _FileReadIn; } }
+
 
         private string _FilePath = "";
 
@@ -45,6 +49,10 @@ namespace K1_S6.Classes
                 {
                     Console.WriteLine(e.Message);
                     throw e;
+                }
+                finally
+                {
+                    _FileReadIn = true;
                 }
             }
             else

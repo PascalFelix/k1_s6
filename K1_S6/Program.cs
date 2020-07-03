@@ -15,12 +15,25 @@ namespace K1_S6
             var Reader = new FileReader("KI_5.txt");
             Reader.ReadFile();
 
-            foreach(var test in Reader)
-            {
-                Console.WriteLine(test);
-            }
+            //foreach(var test in Reader)
+            //{
+            //    Console.WriteLine(test);
+            //}
+
+            var Mapper = new KiDataMapper(Reader);
+            Mapper.Question += Mapper_Question;
+            Mapper.Start();
 
             Console.ReadLine();
+        }
+
+        private static void Mapper_Question(object sender, Events.QuestionEventArgs e)
+        {
+            Console.WriteLine(e.Question);
+            Console.WriteLine(e.Data);
+
+            int awnser = int.Parse(Console.ReadLine());
+            e.GenerateResult(awnser);
         }
     }
 }
