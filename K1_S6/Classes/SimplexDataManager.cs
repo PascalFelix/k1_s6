@@ -13,14 +13,14 @@ namespace K1_S6.Classes
         private string _ObjectiveFunction = "";
         private List<string> _constainList = new List<string>();
 
-        private List<Constrain> constrainList = new List<Constrain>();
-        private ObjectiveFunction ObjectiveFunction = null;
+        private List<NewConstrain> constrainList = new List<NewConstrain>();
+        private NewObjectiveFunction ObjectiveFunction = null;
 
         private ConstrainHandler ConstrainHandler = null;
         private SimplexCalculator SimplexCalculator = null;
 
         //min or max; min true, max false
-        protected bool TargetType { get; set; }
+        protected OptimisingType TargetType = OptimisingType.min;
 
         //protected int _ArrayHeight = 0;
         //protected int ArrayHeight
@@ -93,12 +93,12 @@ namespace K1_S6.Classes
             //generate constrain object list
             foreach (var item in _constainList)
             {
-                constrainList.Add(new Constrain(item));
+                constrainList.Add(new NewConstrain(item, _constainList.Count));
             }
         }
         protected void CreateObjectiveFunctionObject()
         {
-            ObjectiveFunction = new ObjectiveFunction(_ObjectiveFunction, constrainList.Count);
+            ObjectiveFunction = new NewObjectiveFunction(_ObjectiveFunction, constrainList.Count);
         }
 
         public void Calculate()
@@ -107,9 +107,12 @@ namespace K1_S6.Classes
             {
                 CreateConstrains();
                 CreateObjectiveFunctionObject();
-                ConstrainHandler = new ConstrainHandler(constrainList);
-                SimplexCalculator = new SimplexCalculator(ObjectiveFunction, ConstrainHandler);
+                var temp = new SimplexLineCollection(ObjectiveFunction, constrainList, TargetType);
+
+                //ConstrainHandler = new ConstrainHandler(constrainList);
+                SimplexCalculator = new SimplexCalculator(temp);
                 SimplexCalculator.Work();
+                //SimplexCalculator.Work();
             }
         }
 
@@ -144,12 +147,12 @@ namespace K1_S6.Classes
 
             if (objectiveFunction.Contains("min"))
             {
-                TargetType = true;
+                TargetType = OptimisingType.min;
 
             }
             else if (objectiveFunction.Contains("max"))
             {
-                TargetType = false;
+                TargetType = OptimisingType.max;
             }
             else
             {

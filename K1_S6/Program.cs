@@ -30,6 +30,7 @@ namespace K1_S6
         }
 
         public static int temp = 0;
+       // public static string[] answers = {"2", "0", "2", "1", "1", "1","1", "1", "1", "1", "1" };
         public static string[] answers = {"2", "0", "2", "1", "1", "1"};
 
         private static void Mapper_Question(object sender, Events.QuestionEventArgs e)
