@@ -50,10 +50,6 @@ namespace K1_S6.Classes
                     return false;
                 }
             }
-            //if(RightSideData > 0)
-            //{
-            //    return false;
-            //}
             return true;
         }
         public int GetPivotColumnIndex()
@@ -79,7 +75,6 @@ namespace K1_S6.Classes
             int i = 0;
             foreach (var item in leftSideArray)
             {
-                double test = pivotConstrain.leftSideArray[i] * multiplier;
                 leftSideArray[i] = leftSideArray[i] - (pivotConstrain.leftSideArray[i] * multiplier);
                 i++;
             }

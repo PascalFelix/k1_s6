@@ -17,6 +17,7 @@ namespace K1_S6.Classes
 
         protected void GenerateOptimumTablou()
         {
+            int counter = 0;
             do
             {
                 var pivotIndex = SimplexLineCollection.objectiveFunction.GetPivotColumnIndex();
@@ -24,7 +25,11 @@ namespace K1_S6.Classes
                 SimplexLineCollection.PivotConstrain.ReduceToPivotColumnValueOne(pivotIndex);
                 SimplexLineCollection.ReduceConstrainsToZero(pivotIndex);
                 SimplexLineCollection.objectiveFunction.ReduceToZero(SimplexLineCollection.PivotConstrain, pivotIndex);
-
+                counter++;
+                if(counter > 1000)
+                {
+                    throw new Exception("Tabelle konnte nicht optimiert werden");
+                }
 
             } while (!SimplexLineCollection.objectiveFunction.isAllNegativ());
         }
@@ -38,14 +43,17 @@ namespace K1_S6.Classes
                 try
                 {
                     int OneIndex = 0;
+                    bool OneFound = false;
                     int j = 0;
                     foreach (var item in SimplexLineCollection.constrains)
                     {
-                        if (item.leftSideArray[i] == 1)
+                        var rounded = Math.Round(item.leftSideArray[i]);
+                        if (rounded == double.Parse(1.ToString()))
                         {
+                            OneFound = true;
                             OneIndex = j;
                         }
-                        else if (item.leftSideArray[i] != 0)
+                        else if (rounded != double.Parse(0.ToString()))
                         {
                             output[i] = 0;
                             throw new Exception("asdf");
@@ -53,8 +61,9 @@ namespace K1_S6.Classes
                         j++;
                     }
                     j = 0;
-
+                    if(OneFound)
                     output[i] = SimplexLineCollection.constrains[OneIndex].RightSideValue;
+                    OneFound = false;
 
                 }
                 catch (Exception e)
@@ -62,12 +71,28 @@ namespace K1_S6.Classes
                     //do nothing
                 }
             }
+            int x = 1;
+            foreach (var item in output)
+            {
+                Console.WriteLine("x{0} : {1}", x.ToString(), output[x - 1].ToString());
+                x++;
+            }
+            Console.WriteLine("Objective function right hand side :{0}", SimplexLineCollection.objectiveFunction.RightSideValue.ToString());
+
         }
 
         public void Work()
         {
-            GenerateOptimumTablou();
-            CalcResult();
+            try
+            {
+                GenerateOptimumTablou();
+                CalcResult();
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
         }
 
     }

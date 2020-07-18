@@ -43,15 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\AdvancedConstrain.cs" />
     <Compile Include="Classes\BasicLine.cs" />
-    <Compile Include="Classes\Constrain.cs" />
-    <Compile Include="Classes\ConstrainHandler.cs" />
     <Compile Include="Classes\FileReader.cs" />
     <Compile Include="Classes\KiDataMapper.cs" />
     <Compile Include="Classes\NewConstrain.cs" />
     <Compile Include="Classes\NewObjectiveFunction.cs" />
-    <Compile Include="Classes\ObjectiveFunction.cs" />
     <Compile Include="Classes\SimplexCalculator.cs" />
     <Compile Include="Classes\SimplexDataManager.cs" />
     <Compile Include="Classes\SimplexLineCollection.cs" />

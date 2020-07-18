@@ -26,6 +26,10 @@ namespace K1_S6.Classes
             constrains = newConstrains;
             objectiveFunction = newObjectiveFunction;
             TransponateIfNeeded(type);
+            foreach (var item in constrains)
+            {
+                item.NumberOfConstrains = (constrains.Count);
+            }
             int i = 0;
             foreach (var item in constrains)
             {
@@ -34,7 +38,6 @@ namespace K1_S6.Classes
             }
             objectiveFunction.GenerateSlackVariable();
         }
-
 
         public void DetectPivotConstrain(int pivotColumnIndex)
         {
@@ -62,15 +65,6 @@ namespace K1_S6.Classes
 
             }
         }
-
-
-
-
-
-
-
-
-
 
         public void TransponateIfNeeded(OptimisingType type)
         {
@@ -100,10 +94,10 @@ namespace K1_S6.Classes
             TransponatedArray = Transpose(temp);
             
 
-            for (int i = 0; i < objectiveFunction.BasicArray.Length - 1; i++)
+            for (int i = 0; i < TransponatedArray.GetLength(0)-1; i++)
             {
-                double[] tmp = new double[objectiveFunction.BasicArray.Length];
-                for (int j = 0; j < size; j++)
+                double[] tmp = new double[TransponatedArray.GetLength(1)];
+                for (int j = 0; j < TransponatedArray.GetLength(1); j++)
                 {
                     tmp[j] = TransponatedArray[i, j];
                 }
@@ -114,16 +108,18 @@ namespace K1_S6.Classes
                 constrains[i].SetBasicArray(tmp);
 
             }
-            double[] tmp2 = new double[objectiveFunction.BasicArray.Length];
-            for (int j = 0; j < size; j++)
+
+            double[] tmp2 = new double[TransponatedArray.GetLength(1)];
+            for (int i = 0; i < TransponatedArray.GetLength(1); i++)
             {
-                tmp2[j] = TransponatedArray[size - 1, j];
+                tmp2[i] = TransponatedArray[TransponatedArray.GetLength(0) -1, i];
             }
             objectiveFunction.SetBasicArray(tmp2);
             objectiveFunction.NumberOfConstrains = constrains.Count;
         }
         private double[,] Transpose(double[,] matrix)
         {
+            //quelle stackoverflow
             int w = matrix.GetLength(0);
             int h = matrix.GetLength(1);
 

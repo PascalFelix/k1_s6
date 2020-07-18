@@ -16,68 +16,15 @@ namespace K1_S6.Classes
         private List<NewConstrain> constrainList = new List<NewConstrain>();
         private NewObjectiveFunction ObjectiveFunction = null;
 
-        private ConstrainHandler ConstrainHandler = null;
         private SimplexCalculator SimplexCalculator = null;
 
-        //min or max; min true, max false
         protected OptimisingType TargetType = OptimisingType.min;
 
-        //protected int _ArrayHeight = 0;
-        //protected int ArrayHeight
-        //{
-        //    get
-        //    {
-        //        if (_ArrayHeight == 0)
-        //        {
-        //            ArrayHeight = CalculateArrayHeight();
-        //        }
-
-        //        return _ArrayHeight;
-
-        //    }
-        //    set
-        //    {
-        //        _ArrayHeight = value;
-        //    }
-        //}
-
-        //protected int _ArrayWidth = 0;
-        //protected int ArrayWidth
-        //{
-        //    get
-        //    {
-        //        if (_ArrayWidth == 0)
-        //        {
-        //            ArrayWidth = CalculateArrayWidth();
-        //        }
-
-        //        return _ArrayWidth;
-        //    }
-        //    set
-        //    {
-        //        _ArrayWidth = value;
-        //    }
-        //}
-
-
-
+    
         public SimplexDataManager()
         {
 
         }
-
-        //protected int CalculateArrayWidth()
-        //{
-        //    //todo
-        //    return 0;
-        //}
-
-        //protected int CalculateArrayHeight()
-        //{
-        //    //todo
-        //    return 0;
-        //}
-
 
         protected bool isObjectFunctionSet()
         {
@@ -109,10 +56,8 @@ namespace K1_S6.Classes
                 CreateObjectiveFunctionObject();
                 var temp = new SimplexLineCollection(ObjectiveFunction, constrainList, TargetType);
 
-                //ConstrainHandler = new ConstrainHandler(constrainList);
                 SimplexCalculator = new SimplexCalculator(temp);
                 SimplexCalculator.Work();
-                //SimplexCalculator.Work();
             }
         }
 
