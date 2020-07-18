@@ -49,6 +49,7 @@
     <Compile Include="Classes\FileReader.cs" />
     <Compile Include="Classes\KiDataMapper.cs" />
     <Compile Include="Classes\ObjectiveFunction.cs" />
+    <Compile Include="Classes\SimplexCalculator.cs" />
     <Compile Include="Classes\SimplexDataManager.cs" />
     <Compile Include="Events\QuestionEventArgs.cs" />
     <Compile Include="Events\QuestionResult.cs" />

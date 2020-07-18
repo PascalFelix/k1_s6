@@ -12,7 +12,7 @@ namespace K1_S6.Classes
         public int TotalVariables { get; set; }
         public int CurrentPosition { get; set; }
 
-        public int[] SchlupfVariablen = null;
+        public double[] SchlupfVariablen = null;
 
         public double[] leftSideData = null;
 
@@ -25,7 +25,7 @@ namespace K1_S6.Classes
 
             leftSideData = new double[numberOfTotalVariables];
             Array.Clear(leftSideData, 0, numberOfTotalVariables);
-            SchlupfVariablen = new int[numberOfTotalConstrains];
+            SchlupfVariablen = new double[numberOfTotalConstrains];
             SchlupfVariablen[currentPosition] = 1;
             OrderAndCreateLeftSideDataArray();
 
@@ -58,7 +58,7 @@ namespace K1_S6.Classes
 
         public double DivideRightSideValueByDouble(double value)
         {
-            return RightsideOperatorValue / value;
+            return RightSideValue / value;
         }
 
         public double DivideRightSideValueByPivotCloumnIndexValue(int index)
@@ -66,7 +66,49 @@ namespace K1_S6.Classes
             return DivideRightSideValueByDouble(leftSideData[index]);
         }
 
+        public void ReduceToPivotColumnValueOne(int pivotColumnIndex)
+        {
+            var pivotValue = leftSideData[pivotColumnIndex];
+            if (pivotValue == 1 || pivotValue == 0)
+            {
+                return;
+            }
+            else
+            {
+                int i = 0;
+                foreach (var item in leftSideData)
+                {
+                    leftSideData[i] = leftSideData[i] / pivotValue;
+                    i++;
+                }
+                i = 0;
+                foreach (var item in SchlupfVariablen)
+                {
+                    SchlupfVariablen[i] = SchlupfVariablen[i] / pivotValue;
+                    i++;
+                }
+                RightSideValue = RightSideValue / pivotValue;
+            }
+        }
 
+        public void ReduceToZero(AdvancedConstrain pivotConstrain, int pivotIndex)
+        {
+            var multiplier = leftSideData[pivotIndex];
+
+            int i = 0;
+            foreach (var item in leftSideData)
+            {
+                leftSideData[i] = leftSideData[i] - (pivotConstrain.leftSideData[i] * multiplier);
+                i++;
+            }
+            i = 0;
+            foreach (var item in SchlupfVariablen)
+            {
+                SchlupfVariablen[i] = SchlupfVariablen[i] - (pivotConstrain.SchlupfVariablen[i] * multiplier);
+                i++;
+            }
+            RightSideValue = RightSideValue - (pivotConstrain.RightSideValue * multiplier);
+        }
 
     }
 }

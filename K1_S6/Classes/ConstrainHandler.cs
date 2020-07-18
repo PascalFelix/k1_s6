@@ -55,11 +55,24 @@ namespace K1_S6.Classes
             foreach (var item in AdvancedConstrains)
             {
                 item.DivideRightSideValueByPivotCloumnIndexValue(pivotColumnIndex);
-                if(item.RightsideOperatorValue > temp)
+                if(item.RightSideValue < temp || temp == 0)
                 {
-                    temp = item.RightsideOperatorValue;
+                    temp = item.RightSideValue;
                     PivotConstrain = item;
                 }
+            }
+        }
+
+        public void ReduceConstrainsToZero(int pivotColumnIndex)
+        {
+            foreach (var item in AdvancedConstrains)
+            {
+                if(item == PivotConstrain)
+                {
+                    continue;
+                }
+                item.ReduceToZero(PivotConstrain, pivotColumnIndex);
+
             }
         }
 

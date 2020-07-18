@@ -17,6 +17,7 @@ namespace K1_S6.Classes
         private ObjectiveFunction ObjectiveFunction = null;
 
         private ConstrainHandler ConstrainHandler = null;
+        private SimplexCalculator SimplexCalculator = null;
 
         //min or max; min true, max false
         protected bool TargetType { get; set; }
@@ -107,6 +108,8 @@ namespace K1_S6.Classes
                 CreateConstrains();
                 CreateObjectiveFunctionObject();
                 ConstrainHandler = new ConstrainHandler(constrainList);
+                SimplexCalculator = new SimplexCalculator(ObjectiveFunction, ConstrainHandler);
+                SimplexCalculator.Work();
             }
         }
 

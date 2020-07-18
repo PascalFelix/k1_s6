@@ -22,7 +22,7 @@ namespace K1_S6.Classes
 
         protected string[] _Array { get; set; }
 
-        public double RightsideOperatorValue { get; set; }
+        public double RightSideValue { get; set; }
 
         public OperatorType OperatorType = OperatorType.none;
 
@@ -77,7 +77,7 @@ namespace K1_S6.Classes
             double temp = 0;
             if (double.TryParse(value, out temp))
             {
-                RightsideOperatorValue = temp;
+                RightSideValue = temp;
             }
             else
             {
@@ -102,7 +102,7 @@ namespace K1_S6.Classes
                     returnData[i] = item;
                     i++;
                 }
-                returnData[i] = RightsideOperatorValue.ToString();
+                returnData[i] = RightSideValue.ToString();
 
                 //_Array = new string[returnData.Length];
                 _Array = returnData;

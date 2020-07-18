@@ -13,18 +13,20 @@ namespace K1_S6.Classes
 
         public double[] LeftSideData { get; set; }
 
-        public int[] SchlupfVariablen { get; set; }
+        public double[] SchlupfVariablen { get; set; }
 
         public int TotalConstrains { get; set; }
 
-        public int PivotColumnIndex { get; set; }
+        public double RightSideValue = 0;
+
+      //  public int PivotColumnIndex { get; set; }
 
         public ObjectiveFunction(string objectiveFunction, int maxConstrains)
         {
             sObjectiveFunction = objectiveFunction;
             TotalConstrains = maxConstrains;
             Work();
-            PivotColumnIndex = GetPivotColumnIndex();
+          //  PivotColumnIndex = GetPivotColumnIndex();
         }
 
         protected void Work()
@@ -34,31 +36,33 @@ namespace K1_S6.Classes
             int i = 0;
             foreach (var item in splitedData)
             {
-                LeftSideData[i] = double.Parse(getVariableName(item));
+                LeftSideData[i] = double.Parse(getVariableValue(item));
                 i++;
             }
-            SchlupfVariablen = new int[TotalConstrains];
+            SchlupfVariablen = new double[TotalConstrains];
 
         }
 
         public double GetPivotColumnValue()
         {
-            return LeftSideData[PivotColumnIndex];
+            return LeftSideData[GetPivotColumnIndex()];
         }
 
-        protected int GetPivotColumnIndex()
+        public int GetPivotColumnIndex()
         {
             int i = 0;
+            int index = 0;
             double temp = 0;
             foreach (var item in LeftSideData)
             {
                 if (item > temp)
                 {
                     temp = item;
+                    index = i;
                 }
                 i++;
             }
-            return i;
+            return index;
         }
 
 
@@ -72,6 +76,47 @@ namespace K1_S6.Classes
             return cell.Split('*')[0];
         }
 
+        public bool isAllNegativ()
+        {
+            foreach (var item in LeftSideData)
+            {
+                if(item > 0)
+                {
+                    return false;
+                }
+            }
+            foreach (var item in SchlupfVariablen)
+            {
+                if (item > 0)
+                {
+                    return false;
+                }
+            }
+            //if(RightSideData > 0)
+            //{
+            //    return false;
+            //}
+            return true;
+        }
+
+        public void ReduceToZero(AdvancedConstrain pivotConstrain, int pivotIndex)
+        {
+            var multiplier = LeftSideData[pivotIndex];
+
+            int i = 0;
+            foreach (var item in LeftSideData)
+            {
+                LeftSideData[i] = LeftSideData[i] - (pivotConstrain.leftSideData[i] * multiplier);
+                i++;
+            }
+            i = 0;
+            foreach (var item in SchlupfVariablen)
+            {
+                SchlupfVariablen[i] = SchlupfVariablen[i] - (pivotConstrain.SchlupfVariablen[i] * multiplier);
+                i++;
+            }
+            RightSideValue = RightSideValue - (pivotConstrain.RightSideValue * multiplier);
+        }
 
     }
 }
